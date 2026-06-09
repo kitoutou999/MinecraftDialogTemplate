@@ -1,0 +1,6 @@
+name: MinecraftUI
+version: '${version}'
+
+main: org.kitoutou999.minecraftUI.MinecraftUI
+api-version: '1.21.4'
+load: POSTWORLD

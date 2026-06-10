@@ -1,0 +1,6 @@
+# Hébergement HTTP du resource pack (envoyé aux joueurs à la connexion).
+# host : adresse que le CLIENT utilise pour joindre le serveur
+#        (localhost si le client tourne sur la même machine)
+resource-pack:
+  host: localhost
+  port: 8123

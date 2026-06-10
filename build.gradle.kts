@@ -13,7 +13,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly("io.papermc.paper:paper-api:1.21.4-R0.1-SNAPSHOT")
+    compileOnly("io.papermc.paper:paper-api:1.21.8-R0.1-SNAPSHOT")
 }
 
 java {
@@ -22,14 +22,28 @@ java {
 
 tasks {
     runServer {
-        minecraftVersion("1.21.4")
+        minecraftVersion("1.21.8")
         jvmArgs("-Xms2G", "-Xmx2G", "-Dcom.mojang.eula.agree=true")
     }
 
     processResources {
         val props = mapOf("version" to version)
-        filesMatching("plugin.yml") {
+        filesMatching(listOf("plugin.yml", "paper-plugin.yml")) {
             expand(props)
+        }
+    }
+
+    register<Zip>("buildResourcePack") {
+        group = "minecraft"
+        description = "Zippe le resource pack (masque le bouton warning des dialogs)"
+        from("resourcepack")
+        archiveFileName = "MinecraftUI-ResourcePack.zip"
+        destinationDirectory = layout.buildDirectory.dir("resourcepack")
+    }
+
+    jar {
+        from(named("buildResourcePack")) {
+            rename { "resourcepack.zip" }
         }
     }
 
@@ -37,10 +51,11 @@ tasks {
         group = "minecraft"
         description = "Build + copie le jar + reload via RCON (serveur doit tourner)"
         dependsOn("jar")
+        notCompatibleWithConfigurationCache("utilise project au runtime")
+        val jarName = "${project.name}-${project.version}.jar"
+        val src = file("build/libs/$jarName")
+        val dest = file("run/plugins/${project.name}.jar")
         doLast {
-            val jarName = "${project.name}-${project.version}.jar"
-            val src = file("build/libs/$jarName")
-            val dest = file("run/plugins/${project.name}.jar")
             src.copyTo(dest, overwrite = true)
             println("Jar copie : ${dest.absolutePath}")
             rconCommand("reload confirm")

@@ -1,0 +1,6 @@
+name: MinecraftUI
+version: '${version}'
+main: org.kitoutou999.minecraftUI.MinecraftUI
+api-version: '1.21'
+bootstrapper: org.kitoutou999.minecraftUI.MinecraftUIBootstrap
+description: Plugin de demonstration des dialogs Minecraft

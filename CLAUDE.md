@@ -117,3 +117,8 @@ Le champ `externalTitle` de `DialogBase` définit le texte affiché sur le bouto
 ### `registryValueSet()`
 - Disponible uniquement dans le contexte bootstrap (`DialogRegistryEntry.Builder`)
 - À l'exécution, utiliser `RegistrySet.valueSet(RegistryKey.DIALOG, collection)` à la place
+
+### Compatibilité client (ViaVersion / ViaBackwards)
+- Pour accepter des clients de versions différentes, installer **ViaVersion** + **ViaBackwards** dans `run/plugins/` (jars suffisants, aucune config requise)
+- Le bouton custom dans le menu pause (Dialog API) n'est visible qu'à partir du client **1.21.6** minimum — les clients antérieurs ne comprennent pas les paquets Dialog et ignorent le bouton silencieusement
+- La Dialog API a été introduite en 1.21.5 : la limite de visibilité est côté **client**, pas côté serveur
